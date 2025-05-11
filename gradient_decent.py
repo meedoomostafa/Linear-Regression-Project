@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.linalg import norm
 
-def gradient_decent(features, targets ,initial_state,step_size,precision,iterations):
+def gradient_decent(features, targets ,initial_state,step_size,precision,iterations = 1000):
     best_state = None
     min_val = float('inf')
     states_list = []
@@ -13,15 +13,16 @@ def gradient_decent(features, targets ,initial_state,step_size,precision,iterati
             cur_state = initial_state.copy()
             last_state = np.full_like(cur_state, float('inf'))
             iter = 0
-            while norm(cur_state - last_state) > precision and iter < iterations :
+            val = norm(cur_state - last_state)
+            while val > p and iter < iterations :
                 last_state = cur_state.copy()
                 preds = predictions(features, cur_state)
-                errors = errors(targets, preds)
-                cur_state -= (s / n_samples) * np.dot(features.T, errors)
+                errs = errors(targets, preds)
+                cur_state -= s * (1 / n_samples) * np.dot(features.T, errs)
                 states_list.append(cur_state.copy())
                 iter += 1
 
-            cur_error = norm(cur_state - last_state)
+            cur_error = np.sum(np.abs(errors(targets, predictions(features, cur_state))))
             if cur_error < min_val:
                 min_val = cur_error
                 best_state = cur_state.copy()

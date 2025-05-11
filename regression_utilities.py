@@ -2,9 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # cost function
-def cost_function(y , y_pred):
-    total = sum ((y - y_pred) ** 2)
-    return total
+def cost_function(X , y, wights):
+    m = len(y)
+    predictions = X @ wights
+    errors = y - predictions
+    cost = (1 / (2 * m)) * (errors.T @ errors)
+    return cost
 
 def plot_cost_function(y, y_pred):
     plt.plot(y, y_pred)
@@ -26,3 +29,6 @@ def plot_regression_line(x, y, y_pred):
 # adding bias
 def add_bias(x):
     return np.c_[np.ones((x.shape[0], 1)), x]
+
+def predictions(x, wights):
+    return np.dot(x, wights)
