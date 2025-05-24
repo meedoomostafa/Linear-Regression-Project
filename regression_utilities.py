@@ -1,34 +1,16 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-# cost function
-def cost_function(X , y, wights):
+def add_bias(X):
+    return np.c_[np.ones((X.shape[0], 1)), X]
+
+def normalize_features(X):
+    means = np.mean(X, axis=0)
+    stds = np.std(X, axis=0)
+    stds[stds == 0] = 1  # Avoid division by zero
+    X_normalized = (X - means) / stds
+    return X_normalized, means, stds
+
+def cost_function(X, y, weights):
     m = len(y)
-    predictions = X @ wights
-    errors = y - predictions
-    cost = (1 / (2 * m)) * (errors.T @ errors)
-    return cost
-
-def plot_cost_function(y, y_pred):
-    plt.plot(y, y_pred)
-    plt.xlabel('y')
-    plt.ylabel('y_pred')
-    plt.title('Cost Function')
-    plt.show()
-
-
-def plot_regression_line(x, y, y_pred):
-    plt.scatter(x, y, color='blue', label='Data points')
-    plt.plot(x, y_pred, color='red', label='Regression line')
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title('Linear Regression')
-    plt.legend()
-    plt.show()
-
-# adding bias
-def add_bias(x):
-    return np.c_[np.ones((x.shape[0], 1)), x]
-
-def predictions(x, wights):
-    return np.dot(x, wights)
+    errors = y - (X @ weights)
+    return (errors.T @ errors) / (2 * m)
