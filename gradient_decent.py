@@ -2,7 +2,7 @@ import numpy as np
 from numpy.linalg import norm
 
 
-def gradient_decent(features, targets, initial_weights, step_sizes, precisions, iterations=1000000):
+def gradient_decent(features, targets, initial_weights, step_sizes, precisions, iterations=100000):
     best_weights = None
     min_error = float('inf')
     n_samples = features.shape[0]
