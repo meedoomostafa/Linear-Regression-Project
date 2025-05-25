@@ -14,6 +14,9 @@ build/
 dist/
 *.egg-info/
 
+# Data files
+*.csv
+
 # Logs and databases
 *.log
 *.sqlite3
